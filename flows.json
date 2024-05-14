@@ -1,0 +1,132 @@
+[
+    {
+        "id": "eb87dcbbf5386132",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "eeb3b6c93b15eea2",
+        "type": "MSSQL-CN",
+        "tdsVersion": "7_4",
+        "name": "DEMO_IOT",
+        "server": "DESKTOP-PED1FFB",
+        "port": "1433",
+        "encyption": true,
+        "trustServerCertificate": true,
+        "database": "DEMO_IOT",
+        "useUTC": true,
+        "connectTimeout": "15000",
+        "requestTimeout": "15000",
+        "cancelTimeout": "5000",
+        "pool": "5",
+        "parseJSON": false,
+        "enableArithAbort": true,
+        "readOnlyIntent": false
+    },
+    {
+        "id": "d57e36793fff5826",
+        "type": "http in",
+        "z": "eb87dcbbf5386132",
+        "name": "baitap",
+        "url": "/myduyen",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 110,
+        "y": 140,
+        "wires": [
+            [
+                "2065bfb1a0b68947"
+            ]
+        ]
+    },
+    {
+        "id": "1b62cea7c5433add",
+        "type": "http request",
+        "z": "eb87dcbbf5386132",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "",
+        "persist": false,
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 790,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3b7e8fb4a28b0892",
+        "type": "MSSQL",
+        "z": "eb87dcbbf5386132",
+        "mssqlCN": "eeb3b6c93b15eea2",
+        "name": "",
+        "outField": "payload",
+        "returnType": 0,
+        "throwErrors": 1,
+        "query": "",
+        "modeOpt": "queryMode",
+        "modeOptType": "query",
+        "queryOpt": "topic",
+        "queryOptType": "msg",
+        "paramsOpt": "payload",
+        "paramsOptType": "msg",
+        "rows": "rows",
+        "rowsType": "msg",
+        "parseMustache": true,
+        "params": [],
+        "x": 520,
+        "y": 180,
+        "wires": [
+            [
+                "1b62cea7c5433add",
+                "316176abb75d50ee"
+            ]
+        ]
+    },
+    {
+        "id": "2065bfb1a0b68947",
+        "type": "function",
+        "z": "eb87dcbbf5386132",
+        "name": "function 1",
+        "func": "var query = `select * from SensorHistory`;\nmsg.topic = query\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 220,
+        "wires": [
+            [
+                "3b7e8fb4a28b0892"
+            ]
+        ]
+    },
+    {
+        "id": "316176abb75d50ee",
+        "type": "debug",
+        "z": "eb87dcbbf5386132",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 300,
+        "wires": []
+    }
+]
